@@ -2,6 +2,7 @@ from pprint import pprint
 from Format import ResumeFormat
 from PdfFetcher import PdfFetcher
 from re import *
+from listOfCountries import countries
 
 class ResumeParser:
     def __init__(self, path) -> None:
@@ -55,19 +56,27 @@ class ResumeParser:
 
         
     def __name(self):
-        namePattern = compile("name")
-        name = namePattern.findall(self.data)
-        if len(name) != 0:
-            return name
+        searchWithIn = 8
+        # self.data = str(self.data)
+        # dataList = self.data.split('\n')
+        # dataListSorted = sorted(dataList, key=len)
+        # print(dataListSorted)
+        # dataList = dataList[:search]
+        # nameList = []
+        # for i in dataList:
+        #     namePattern = compile("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$")
+        #     nameList.append(namePattern.findall(self.data))
+        # if len(nameList) != 0:
+        #     return nameList
         return None
     def __email(self):
-        emailPattern = compile("")
+        emailPattern = compile(r"^\S+@\S+\.\S+$")
         email = emailPattern.findall(self.data)
         if len(email) != 0:
             return email
         return None
     def __phoneNumber(self):
-        phonePattern = compile("[6-9]\d{9}")
+        phonePattern = compile("^\\+?\\d{1,4}?[-.\\s]?\\(?\\d{1,3}?\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$")
         phone = phonePattern.findall(self.data)
         if len(phone) != 0:
             return phone
@@ -75,9 +84,9 @@ class ResumeParser:
 
 
     def __address(self):
-        addressPattern = compile("address")
+        addressPattern = compile("^(\w*\s*[\#\-\,\/\.\(\)\&]*)+")
         address = addressPattern.findall(self.data)
-        if len(address) != 0:
+        if address:
             return address
         return None
 
@@ -89,10 +98,11 @@ class ResumeParser:
         return None
     
     def __country(self):
-        countryPattern = compile("country")
-        country = countryPattern.findall(self.data)
-        if len(country) != 0:
-            return country
+        indexes = [self.data.find(country) for country in countries]
+        country = [(index, country) for index, country in zip(indexes, countries) 
+                  if index != -1]
+        if country:
+            return country[0][1]
         return None
     
     def __socialMedia(self):
@@ -110,7 +120,7 @@ class ResumeParser:
         return None
     
     def __experience(self):
-        experiencePattern = compile("experience")
+        experiencePattern = compile(r"experience|Experience|EXPERIENCE|WORK EXPERIENCE|Work Experience")
         experience = experiencePattern.findall(self.data)
         if len(experience) != 0:
             return experience
@@ -156,8 +166,9 @@ class ResumeParser:
         return None
     
     def __publication(self):
-        publicationPattern = compile("publication")
-        publication = publicationPattern.findall(self.data)
+        publicationPattern = compile(r"Publication|publication|PUBLICATION")
+        publication = publicationPattern.match(self.data)
+        
         if len(publication) != 0:
             return publication
         return None
