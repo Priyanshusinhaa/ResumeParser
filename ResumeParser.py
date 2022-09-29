@@ -57,17 +57,7 @@ class ResumeParser:
         
     def __name(self):
         searchWithIn = 8
-        # self.data = str(self.data)
-        # dataList = self.data.split('\n')
-        # dataListSorted = sorted(dataList, key=len)
-        # print(dataListSorted)
-        # dataList = dataList[:search]
-        # nameList = []
-        # for i in dataList:
-        #     namePattern = compile("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$")
-        #     nameList.append(namePattern.findall(self.data))
-        # if len(nameList) != 0:
-        #     return nameList
+
         return None
     def __email(self):
         emailPattern = compile(r"^\S+@\S+\.\S+$")
@@ -167,15 +157,19 @@ class ResumeParser:
     
     def __publication(self):
         publicationPattern = compile(r"Publication|publication|PUBLICATION")
-        publication = publicationPattern.match(self.data)
-        
+        publication = publicationPattern.findall(self.data)
         if len(publication) != 0:
             return publication
         return None
+    def __dict__(self):
+        return vars(self.data)
     
 
 path = './PriyanshuSinhaResumev1.4.pdf'
 
 resumeObj = ResumeParser(path)
-pprint(vars(resumeObj))
-pprint(resumeObj.getDict()) 
+
+a = ResumeParser(path).__dict__
+print(a)
+# pprint(vars(resumeObj))
+# pprint(resumeObj.getDict()) 
