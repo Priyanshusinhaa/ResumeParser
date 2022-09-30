@@ -5,14 +5,12 @@ class ResumeFormat:
             'Name': None,
             'Email': None,
             'Address': None,
-            'PhoneNumber': None,
+            'Phone': None,
             'DOB': None,
             'Country': None,
             'SocialMedia':{
-                'Twitter': None,
                 'LinkedIn': None,
                 'Github': None,
-                'Instagram': None,
                 'Other': None
             },
             'Summary': None,
@@ -33,8 +31,8 @@ class ResumeFormat:
                 self.obj['Email'] = val
             if key == 'address':
                 self.obj['Address'] = val
-            if key == 'phoneNumber':
-                self.obj['PhoneNumber'] = val
+            if key == 'phone':
+                self.obj['Phone'] = val
             if key == 'dob':
                 self.obj['DOB'] = val
             if key == 'country':
@@ -72,7 +70,7 @@ class ResumeFormat:
 
 # a = 'e'
 # # a.upper()
-# myobj = ResumeFormat(email = 'this@me.com', name = 'priyanshu')
+# myobj = ResumeFormat(email = 'this@me.com', name = 'priyanshu', phone = 8493, dob = 89)
 # pprint(vars(myobj), sort_dicts=False)
 
 

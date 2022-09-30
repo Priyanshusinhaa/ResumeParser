@@ -7,8 +7,9 @@ from listOfCountries import countries
 class ResumeParser:
     def __init__(self, path) -> None:
         ResumeFormat()
-        self.data = PdfFetcher(path)
-        self.data = str(self.data)
+        self.data = PdfFetcher(path).getStr()
+        self.dataList = PdfFetcher(path).getList()
+        # self.data = str(self.data)
     def getDict(self):
         objFormat = {'Name': None,
                     'Email': None,
@@ -38,7 +39,7 @@ class ResumeParser:
                         name = self.__name(), 
                         email = self.__email(),
                         address = self.__address(),
-                        phoneNumber = self.__phoneNumber(),
+                        phone = self.__phoneNumber(),
                         dob = self.__dob(),
                         country = self.__country(),
                         socialMedia = self.__socialMedia(),
@@ -52,32 +53,50 @@ class ResumeParser:
                         reference = self.__reference(),
                         publication = self.__publication()
                         )
-        return vars(obj)
+        return obj
 
         
     def __name(self):
-        searchWithIn = 8
-
+        searchWithIn = 3
+        dataList = self.dataList[:searchWithIn]
+        data = []
+        for i in dataList:
+            a = i.split(' ')
+            if (len(a) == 2) | (len(a) == 1) | (len(a) == 3):
+                data.append(' '.join(a))
+        if len(data) != 0:
+            return data[0]
         return None
     def __email(self):
-        emailPattern = compile(r"^\S+@\S+\.\S+$")
-        email = emailPattern.findall(self.data)
+        emailPattern = compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b')
+        myStr = ' '.join(self.dataList)
+        email = emailPattern.findall(myStr)
         if len(email) != 0:
-            return email
+            return email[0]
         return None
     def __phoneNumber(self):
-        phonePattern = compile("^\\+?\\d{1,4}?[-.\\s]?\\(?\\d{1,3}?\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$")
+        phonePattern = compile("\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4}")
         phone = phonePattern.findall(self.data)
         if len(phone) != 0:
-            return phone
+            return phone[0]
         return None
 
 
     def __address(self):
-        addressPattern = compile("^(\w*\s*[\#\-\,\/\.\(\)\&]*)+")
-        address = addressPattern.findall(self.data)
-        if address:
-            return address
+        # addressPattern = compile("^(\\d{1,}) [a-zA-Z0-9\\s]+(\\,)? [a-zA-Z]+(\\,)? [A-Z]{2} [0-9]{5,6}$")
+        # address = addressPattern.findall(self.data)
+        a = ' '.join(self.dataList)
+        addressPattern = compile("^(\\d{1,}) [a-zA-Z0-9\\s]+(\\,)? [a-zA-Z]+(\\,)? [A-Z]{2} [0-9]{5,6}$")
+        address = addressPattern.findall(a)
+        print(address)
+        # address = {
+        #     'street': s,
+        #     'City': cs,
+        #     'State': cs,
+        #     'Pin': cs
+        # }
+        # if address:
+        #     return address
         return None
 
     def __dob(self):
@@ -104,9 +123,14 @@ class ResumeParser:
 
     def __summary(self):
         summaryPattern = compile("summary")
-        summary = summaryPattern.findall(self.data)
-        if len(summary) != 0:
-            return summary
+        myData = self.dataList
+        # temp, index = 0, 0
+        # for i in myData:
+        #     if len(i) >= max(temp):
+        #         temp = len(i)
+        # summary = summaryPattern.findall(self.data)
+        # if len(summary) != 0:
+        #     return summary
         return None
     
     def __experience(self):
@@ -162,14 +186,19 @@ class ResumeParser:
             return publication
         return None
     def __dict__(self):
-        return vars(self.data)
-    
+        return vars(self.data)    
 
-path = './PriyanshuSinhaResumev1.4.pdf'
+path = './resume.pdf'
 
-resumeObj = ResumeParser(path)
+resumeObj = ResumeParser(path).dataList
 
-a = ResumeParser(path).__dict__
-print(a)
-# pprint(vars(resumeObj))
-# pprint(resumeObj.getDict()) 
+a = ' '.join(resumeObj)
+# print(resumeObj)
+
+
+# phonePattern = compile("\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4}")
+# phone = phonePattern.findall(a)
+
+# print(phone)
+a = ResumeParser(path).getDict()
+pprint(a)
