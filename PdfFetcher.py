@@ -1,6 +1,14 @@
 import textract
 import re
 
+
+'''
+PdfFetcher - It extract string from pdf and returns byte, string, or list datatype
+.getByte - returns byte format
+.getStr - return string format
+.getList - return list format
+'''
+
 class PdfFetcher:
     def __init__(self, path) -> None:
         self.path = path

@@ -1,4 +1,11 @@
 from pprint import pprint
+
+
+'''
+ResumeFormat - It let you create a predefined schema for resume.
+it take several parameters as input and put them inside a keys
+if you won't pass any parameter it will set the value as default
+'''
 class ResumeFormat:
     def __init__(self, **kwargs) -> None:
         self.obj = {
