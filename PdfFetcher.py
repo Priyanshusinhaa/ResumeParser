@@ -19,8 +19,3 @@ class PdfFetcher:
         dataList = [value for value in dataList if value != ""]
         dataList = [value for value in dataList if len(value) != 1]
         return dataList
-
-# path = './functionalsample.pdf'
-
-# a = PdfFetcher(path).getList() 
-# print(type(a), a)
