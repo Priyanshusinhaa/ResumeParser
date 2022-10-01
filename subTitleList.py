@@ -1,0 +1,21 @@
+subTitleList = [
+    'Education',
+    'Employement History',
+    'Experience',
+    'Projects',
+    'Project',
+    'History',
+    'Work History',
+    'Summary',
+    'Publication',
+    'Achievements',
+    'Awards',
+    'Certificates',
+    'Skills',
+    'Technologies',
+    'Contacts',
+    'Profile',
+    'Soft Skills',
+    'Hard Skills',
+    'Skill Highlights'
+]

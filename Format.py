@@ -8,19 +8,11 @@ class ResumeFormat:
             'Phone': None,
             'DOB': None,
             'Country': None,
-            'SocialMedia':{
-                'LinkedIn': None,
-                'Github': None,
-                'Other': None
-            },
-            'Summary': None,
             'Experience': None,
             'Projects': None,
             'Education': None,
             'Skills': None,
             'Achievements': [],
-            'Awards': [],
-            'Reference': [],
             'Publication': []
         }
         for key, val in kwargs.items():
@@ -37,10 +29,6 @@ class ResumeFormat:
                 self.obj['DOB'] = val
             if key == 'country':
                 self.obj['Country'] = val
-            if key == 'socialMedia':
-                self.obj['SocialMedia'] = val
-            if key == 'summary':
-                self.obj['Summary'] = val
             if key == 'experience':
                 self.obj['Experience'] = val
             if key == 'projects':
@@ -51,26 +39,8 @@ class ResumeFormat:
                 self.obj['Skills'] = val
             if key == 'achievements':
                 self.obj['Achievements'] = val
-            if key == 'awards':
-                self.obj['Awards'] = val
-            if key == 'reference':
-                self.obj['Reference'] = val
             if key == 'publication':
                 self.obj['Publication'] = val
 
     def __repr__(self) -> str:
         return str(self.obj)
-
-            
-            
-
-
-
-
-
-# a = 'e'
-# # a.upper()
-# myobj = ResumeFormat(email = 'this@me.com', name = 'priyanshu', phone = 8493, dob = 89)
-# pprint(vars(myobj), sort_dicts=False)
-
-

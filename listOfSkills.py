@@ -1,0 +1,18 @@
+skillsList = [
+    'python',
+    'node.js',
+    'javascript',
+    'jquery',
+    'sql',
+    'nosql',
+    'mongodb',
+    'mysql',
+    'postgreSql',
+    'machine learning',
+    'natural language processing',
+    'typescript',
+    'react.js',
+    'express',
+    'sail.js',
+    'data structure',
+]
