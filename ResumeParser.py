@@ -8,12 +8,21 @@ from subTitleList import subTitleList
 import nltk
 from operator import itemgetter
 
+'''
+ResumeParser will let you extract the text from files
+it has some function:
+.getDict() - returns dictionary of resume
+.sortDict() - it is for internal use.
+
+and all private function are for internal use 
+or extracting information from resume
+'''
 class ResumeParser:
     def __init__(self, path) -> None:
         ResumeFormat()
         self.data = PdfFetcher(path).getStr()
         self.dataList = PdfFetcher(path).getList()
-        self.searchList = self.search(subTitleList)
+        self.searchList = self.__search(subTitleList)
 
     def sortDict(self, myDict):
         myList = []
@@ -54,7 +63,7 @@ class ResumeParser:
                         publication = self.__publication()
                         )
         return obj
-    def search(self, mySubTitleList):
+    def __search(self, mySubTitleList):
         matchSet = set()
         matchDict = {}
         for i in mySubTitleList:
@@ -205,12 +214,3 @@ class ResumeParser:
             return publication
         else:
             return None   
-
-path = './resume.pdf'
-
-resumeObj = ResumeParser(path).dataList
-
-a = ' '.join(resumeObj)
-a = ResumeParser(path).getDict()
-b = ResumeParser(path).search(subTitleList)
-print(a)
